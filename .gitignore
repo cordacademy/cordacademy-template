@@ -1,0 +1,9 @@
+.DS_Store
+.gradle/
+.idea
+**/build/
+*/.gradle/
+*/.idea/*
+**/out/
+**/logs/
+corda-nodeinfo/corda-nodeinfo.iml
