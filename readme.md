@@ -78,3 +78,37 @@ This template includes quasar which can be found in `lib/quasar.jar`. Corda unit
 -ea -javaagent:lib/quasar.jar
 ```
 
+## Known Problems
+
+### Incorrect Project Name
+
+When you first import a forked or cloned copy of the template repository into IntelliJ you might notice that the project reports an incorrect name; for example, if your repository is called `my-first-cordapp`, then you might see the following at the top of your project view:
+
+```
+my-first-cordapp [cordacademy-template]
+```
+
+To fix this, open `settings.gradle` in your project and rename `rootProject.name`, for example:
+
+```groovy
+rootProject.name = 'my-first-cordapp'
+```
+
+### Quasar Doesn't Load
+
+For some unknown reason, when forking or cloning the template repository, `lib/quasar.jar` does not get copied correctly. You can check this in your repository using the following command:
+
+```shell
+sha1sum quasar.jar
+```
+
+The correct SHA-1 checksum for `quasar.jar` should be `3916162ad638c8a6cb8f3588a9f080dc792bc052`. If your repository is reporting a different SHA-1 checksum then download and replace `quasar.jar` from this repository.
+
+### Unit Tests Don't Execute
+
+You may encounter an issue where unit tests don't execute because of a lack of permission on `gradlew`. In order to correct this, type the following command into the terminal from the root of the repository:
+
+```shell
+sudo chmod +x ./gradlew
+```
+
