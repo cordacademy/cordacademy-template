@@ -78,7 +78,7 @@ This template includes quasar which can be found in `lib/quasar.jar`. Corda unit
 -ea -javaagent:lib/quasar.jar
 ```
 
-## Known Problems
+## Known Issues
 
 ### Incorrect Project Name
 
