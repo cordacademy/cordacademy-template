@@ -1,4 +1,4 @@
-![Cordacademy](https://raw.githubusercontent.com/cordacademy/cordacademy.github.io/master/resources/images/logo_text.png)
+![Cordacademy logo](https://raw.githubusercontent.com/cordacademy/cordacademy.github.io/master/content/images/logo-combined.png)
 
 # Template
 
