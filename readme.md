@@ -124,6 +124,30 @@ buildscript {
 
 _Keep an eye out for **TODO** comments in `build.gradle` files. They serve as indicators to things you will need to modify!_
 
+## Git
+
+This repository will get updated periodically with new dependency versions and features. In order to pull these changes into derived repositories you will need to:
+
+1. Add this template repository as a remote to derived repositories
+
+```
+git remote add template https://github.com/cordacademy/cordacademy-template.git
+```
+
+2. Fetch the changes to the template
+
+```
+git fetch --all
+```
+
+3. Merge the template master into the the derived repository
+
+```
+git merge template/master --allow-unrelated-histories
+```
+
+**BEWARE** This can be a destructive change as the histories are considered unrelated, so review the changes before you commit back to the derived repository.
+
 ## Known Issues
 
 ### Incorrect Project Name
@@ -142,7 +166,7 @@ rootProject.name = 'my-first-cordapp'
 
 For some unknown reason, when forking or cloning the template repository, `lib/quasar.jar` does not get copied correctly. To check that you have the correct version, execute the following command from your lib folder:
 
-#### Linux/Mac
+#### Linux/MacOS
 
 ```shell
 sha1sum quasar.jar
