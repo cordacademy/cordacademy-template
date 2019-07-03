@@ -78,15 +78,59 @@ This template includes quasar which can be found in `lib/quasar.jar`. Corda unit
 -ea -javaagent:lib/quasar.jar
 ```
 
+## Gradle Configuration
+
+Since this template does not contain any CorDapp modules, there is no reason to declare CorDapp configurations. The following code snippets should be added to your CorDapp module `build.gradle` files  and modified accordingly:
+
+#### Contract Modules
+
+```groovy
+cordapp {
+    targetPlatformVersion cordapp_platform_version
+    minimumPlatformVersion cordapp_platform_version
+    contract {
+        name "My First CorDapp Contract"
+        vendor "NewCo"
+        licence "Apache License, Version 2.0"
+        versionId 1
+    }
+}
+```
+
+#### Workflow Modules
+
+```groovy
+cordapp {
+    targetPlatformVersion cordapp_platform_version
+    minimumPlatformVersion cordapp_platform_version
+    workflow {
+        name "My First CorDapp Workflow"
+        vendor "NewCo"
+        licence "Apache License, Version 2.0"
+        versionId 1
+    }
+}
+```
+
+You will also need to define `cordapp_platform_version` in your `buildscript` configuration:
+
+```groovy
+buildscript {
+    ext {
+        cordapp_platform_version = 4
+    }
+}
+```
+
+_Keep an eye out for **TODO** comments in `build.gradle` files. They serve as indicators to things you will need to modify!_
+
 ## Known Issues
 
 ### Incorrect Project Name
 
 When you first import a forked or cloned copy of the template repository into IntelliJ you might notice that the project reports an incorrect name; for example, if your repository is called `my-first-cordapp`, then you might see the following at the top of your project view:
 
-```
-my-first-cordapp [cordacademy-template]
-```
+my-first-cordapp **[cordacademy-template]**
 
 To fix this, open `settings.gradle` in your project and rename `rootProject.name`, for example:
 
@@ -96,13 +140,21 @@ rootProject.name = 'my-first-cordapp'
 
 ### Quasar Doesn't Load
 
-For some unknown reason, when forking or cloning the template repository, `lib/quasar.jar` does not get copied correctly. You can check this in your repository using the following command:
+For some unknown reason, when forking or cloning the template repository, `lib/quasar.jar` does not get copied correctly. To check that you have the correct version, execute the following command from your lib folder:
+
+#### Linux/Mac
 
 ```shell
 sha1sum quasar.jar
 ```
 
-The correct SHA-1 checksum for `quasar.jar` should be `3916162ad638c8a6cb8f3588a9f080dc792bc052`. If your repository is reporting a different SHA-1 checksum then download and replace `quasar.jar` from this repository.
+#### Windows (PowerShell)
+
+```
+Get-FileHash quasar.jar -Algorithm SHA1
+```
+
+The correct SHA-1 checksum for `quasar.jar` should be `3916162ad638c8a6cb8f3588a9f080dc792bc052`. If your repository is reporting a different SHA-1 checksum then you can download the correct version [here](https://github.com/cordacademy/cordacademy-template/raw/master/lib/quasar.jar).
 
 ### Unit Tests Don't Execute
 

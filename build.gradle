@@ -47,34 +47,24 @@ apply plugin: 'net.corda.plugins.cordapp'
 apply plugin: 'net.corda.plugins.cordformation'
 apply plugin: 'net.corda.plugins.quasar-utils'
 
-cordapp {
-    targetPlatformVersion cordapp_platform_version
-    minimumPlatformVersion cordapp_platform_version
-    contract {
-        name "Cordacademy Samples Ping CorDapp"
-        vendor "Cordacademy"
-        licence "Apache License, Version 2.0"
-        versionId 1
-    }
-    workflow {
-        name "Cordacademy Samples Ping CorDapp"
-        vendor "Cordacademy"
-        licence "Apache License, Version 2.0"
-        versionId 1
-    }
-}
-
 dependencies {
+    // Kotlin Dependencies
     implementation "$kotlin_group:kotlin-stdlib-jdk8:$kotlin_version"
 
-    // Development APIs
+    // Corda Development Dependencies
     cordaCompile "$corda_group:corda-core:$corda_release_version"
 
-    // Release APIs
+    // CorDapp Dependencies
+    // TODO : Uncomment the lines below and modify accordingly.
+    // cordapp project(":my-first-cordapp-contract")
+    // cordapp project(":my-first-cordapp-workflow")
+
+    // Corda Deployment Dependencies
     cordaCompile "$corda_group:corda:$corda_release_version"
     cordaCompile "$corda_group:corda-node:$corda_release_version"
     cordaRuntime "$log4j_group:log4j-slf4j-impl:$log4j_version"
 
+    // Test Dependencies
     testRuntimeOnly "$junit_group:junit-jupiter-engine:$junit_version"
     testImplementation "$junit_group:junit-jupiter-api:$junit_version"
     testImplementation "$kotlin_group:kotlin-test:$kotlin_version"
@@ -110,7 +100,15 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
 
 task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['jar']) {
 
-    def rpc = [[user: "user1", "password": "test", "permissions": ["ALL"]]]
+    nodeDefaults {
+        projectCordapp {
+            deploy = false
+        }
+        // TODO : Uncomment the lines below and modify accordingly.
+        // cordapp project(":my-first-cordapp-contract")
+        // cordapp project(":my-first-cordapp-workflow")
+        rpcUsers = [[user: "user1", "password": "test", "permissions": ["ALL"]]]
+    }
 
     node {
         name "O=Notary,L=London,C=GB"
@@ -120,6 +118,7 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['jar']) {
             address("localhost:10003")
             adminAddress("localhost:10043")
         }
+        cordapps.clear()
     }
     node {
         name "O=PartyA,L=London,C=GB"
@@ -128,7 +127,6 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['jar']) {
             address("localhost:10006")
             adminAddress("localhost:10046")
         }
-        rpcUsers = rpc
     }
     node {
         name "O=PartyB,L=New York,C=US"
@@ -137,7 +135,6 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['jar']) {
             address("localhost:10009")
             adminAddress("localhost:10049")
         }
-        rpcUsers = rpc
     }
     node {
         name "O=PartyC,L=Paris,C=FR"
@@ -146,6 +143,5 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['jar']) {
             address("localhost:10012")
             adminAddress("localhost:10052")
         }
-        rpcUsers = rpc
     }
 }
