@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Run All WebServers" type="CompoundRunConfigurationType">
+    <toRun name="Run WebServer (Party C)" type="JetRunConfigurationType" />
+    <toRun name="Run WebServer (Party B)" type="JetRunConfigurationType" />
+    <toRun name="Run WebServer (Party A)" type="JetRunConfigurationType" />
+    <method v="2" />
+  </configuration>
+</component>
