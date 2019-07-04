@@ -19,8 +19,8 @@ dependencies {
 
     // CorDapp Dependencies
     // TODO : Uncomment and modify with the package names for your cordapps.
-    // implementation project(":cordacademy-play-obligation-contract")
-    // implementation project(":cordacademy-play-obligation-workflow")
+    // implementation project(":my-first-cordapp-contract")
+    // implementation project(":my-first-cordapp-workflow")
 
     // Ktor Dependencies
     implementation "$ktor_group:ktor-server-netty:$ktor_version"
