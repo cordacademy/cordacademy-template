@@ -101,7 +101,7 @@ The web server provides some basic functionality  to help manage your node. The 
 | GET  | /admin/flows/registered       | Lists all flows registered by the node                  |
 | GET  | /admin/flows/draining         | Determines whether flow draining is enabled             |
 | POST | /admin/flows/draining/enable  | Enables flow draining                                   |
-| POST | /admin/flows/draining/disable | Disabled flow draining                                  |
+| POST | /admin/flows/draining/disable | Disables flow draining                                  |
 | GET  | /nodes                        | Details about the local and network nodes               |
 | GET  | /nodes/time                   | Gets the local node time                                |
 | GET  | /nodes/local                  | Gets the local node X.500 name                          |
