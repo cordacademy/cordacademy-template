@@ -2,35 +2,34 @@
 
 
 
+1. [Introduction](#introduction)
+2. [Quick Start Guide](#quick-start-guide)
+3. [Running The Web Server](#running-the-web-server)
+4. [Configuring Your CorDapp](#configuring-your-cordapp)
+5. [Writing Unit Tests](#writing-unit-tests)
+6. [Getting Template Updates](#getting-template-updates)
+7. [Known Problems](#known-problems)
+8. [Contribution](#contribution)
+
+
+
 # Introduction
 
-**The Cordacademy template is designed for building Corda applications, providing out-of-the-box functionality that "just works".**
+**The Cordacademy template is designed for building Corda applications with out-of-the-box functionality that "just works".**
 
 We use this template as the basis for all playground and laboratory samples, but you could also use it as a convenient starting block for building your own CorDapps! We've done most of the heavy lifting, so you can focus on more important parts of your application.
 
 At a glance...
 
 - All configuration and dependencies are structured and organised to make upgrading easier.
-- It contains an in-memory network driver for convenient network testing.
-- It contains a web-server built using Ktor with basic node, network and administration functionality.
+- It contains an in-memory network driver which is convenient for testing.
+- It contains a web-server with basic node, network and administration functionality.
 - It contains helper classes for writing unit tests.
 - All gradle tasks, web servers and the in-memory network can be executed directly from IntelliJ IDEA.
 
 
 
-## Contents
-
-1. [Introduction](#introduction)
-2. [Quick Start Guide](#quick-start-guide)
-3. [Configuring Your CorDapp](#configuring-your-cordapp)
-4. [Writing Unit Tests](#writing-unit-tests)
-5. [Getting Template Updates](#getting-template-updates)
-6. [Known Problems](#known-problems)
-7. [Contribution](#contribution)
-
-
-
-## Quick Start Guide
+# Quick Start Guide
 
 Getting started with this template should be really easy; clone, build, run...that should be all it takes!
 
@@ -83,7 +82,7 @@ Web server ports are conveniently aligned with the node's RPC port number. Start
 
 ### Tasks With Quasar
 
-When configuring additional tasks, you might be prompted to include quasar. This can be found in `lib/quasar.jar`. Corda unit tests and node driver configurations require quasar to be passed as a `javaagent` VM argument, for example:
+When configuring additional tasks, you might be prompted to include `quasar.jar` which can be found in the `lib` directory. Corda unit tests and node driver configurations require quasar to be passed as a `javaagent` VM argument, for example:
 
 ```
 -ea -javaagent:lib/quasar.jar
@@ -91,7 +90,29 @@ When configuring additional tasks, you might be prompted to include quasar. This
 
 
 
-## Configuring Your CorDapp
+# Running The Web Server
+
+The web server provides some basic functionality  to help manage your node. The following endpoints are exposed for all web server instances:
+
+| Verb | Endpoint                      | Description                                             |
+| ---- | ----------------------------- | ------------------------------------------------------- |
+| GET  | /admin/nmc/clear              | Clears the network map cache                            |
+| GET  | /admin/nmc/refresh            | Refreshes the network map cache                         |
+| GET  | /admin/flows/registered       | Lists all flows registered by the node                  |
+| GET  | /admin/flows/draining         | Determines whether flow draining is enabled             |
+| POST | /admin/flows/draining/enable  | Enables flow draining                                   |
+| POST | /admin/flows/draining/disable | Disabled flow draining                                  |
+| GET  | /nodes                        | Details about the local and network nodes               |
+| GET  | /nodes/time                   | Gets the local node time                                |
+| GET  | /nodes/local                  | Gets the local node X.500 name                          |
+| GET  | /nodes/network                | Gets the X.500 names of all nodes on the network        |
+| GET  | /nodes/notaries               | Gets the X.500 names of all notary nodes on the network |
+| GET  | /nodes/shutdown               | Determines whether a node shutdown is pending           |
+| POST | /nodes/shutdown               | Shuts down the local node                               |
+
+
+
+# Configuring Your CorDapp
 
 Since this template does not contain any CorDapp modules, there is no reason to declare CorDapp configurations. The following code snippets should be added to your CorDapp module `build.gradle` files  and modified accordingly:
 
@@ -139,7 +160,7 @@ _Keep an eye out for **TODO** comments in `build.gradle` files. They serve as in
 
 
 
-## Writing Unit Tests
+# Writing Unit Tests
 
 This template provides a handy class for implementing unit tests that utilise the Corda in-memory mock network driver. To implement this class, ensure you have a Gradle dependency in your test module to the base project, for example:
 
@@ -185,7 +206,7 @@ class MyUnitTests : MockNetworkTest("my.cordapp.package") {
 
 
 
-## Getting Template Updates
+# Getting Template Updates
 
 This repository will get updated periodically with new dependency versions and features. In order to pull these changes into derived repositories you will need to:
 
@@ -211,7 +232,7 @@ git merge template/master --allow-unrelated-histories
 
 
 
-## Known Problems
+# Known Problems
 
 We've identified a few places where things don't "just work" quite as well as we'd like. We'll work on that, but to save you trawling the internet for solutions, we've documented as many known problems as possible.
 
@@ -229,7 +250,7 @@ rootProject.name = 'my-first-cordapp'
 
 ### Quasar Doesn't Load
 
-For some unknown reason, when forking or cloning the template repository, `lib/quasar.jar` does not get copied correctly. To check that you have the correct version, execute the following command from your lib folder:
+For some unknown reason, when forking or cloning the template repository, `lib/quasar.jar` does not get copied correctly. To check that you have the correct version, execute the following command from your `lib` folder:
 
 #### Linux/MacOS
 
@@ -255,6 +276,6 @@ sudo chmod +x ./gradlew
 
 
 
-## Contribution
+# Contribution
 
 Cordacademy is an open source initiative, so we hope that you will contribute even more awesomeness :)

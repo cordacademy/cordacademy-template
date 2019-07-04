@@ -9,6 +9,9 @@ import io.ktor.routing.post
 import io.ktor.routing.route
 import net.corda.core.messaging.CordaRPCOps
 
+/**
+ * Defines the admin routes for the web server.
+ */
 fun Route.adminRoutes(rpc: CordaRPCOps) = route("/admin") {
 
     get("/nmc/clear") {

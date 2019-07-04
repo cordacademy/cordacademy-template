@@ -9,6 +9,9 @@ import net.corda.testing.driver.driver
 import net.corda.testing.node.TestCordapp
 import net.corda.testing.node.User
 
+/**
+ * Represents an in-memory Corda network.
+ */
 class NodeDriver {
 
     private companion object {
@@ -24,20 +27,32 @@ class NodeDriver {
 
         val logger = loggerFor<NodeDriver>()
 
+        /**
+         * Gets a list of authenticated RPC users.
+         */
         val rpcUsers: List<User> = listOf(User("guest", "letmein", permissions = setOf("ALL")))
 
+        /**
+         * Gets a list of cordapps to be loaded by each node.
+         */
         val cordapps: List<TestCordapp> = listOf(
             // TODO : Uncomment and modify with the package names for your cordapps.
             // TestCordapp.findCordapp("my.first.cordapp.contract"),
             // TestCordapp.findCordapp("my.first.cordapp.workflow")
         )
 
+        /**
+         * Gets a list of identities to be created by the network.
+         */
         val identities: List<CordaX500Name> = listOf(
             CordaX500Name("PartyA", "London", "GB"),
             CordaX500Name("PartyB", "New York", "US"),
             CordaX500Name("PartyC", "Paris", "FR")
         )
 
+        /**
+         * Gets the parameters for the network driver.
+         */
         val parameters = DriverParameters(
             isDebug = true,
             startNodesInProcess = true,

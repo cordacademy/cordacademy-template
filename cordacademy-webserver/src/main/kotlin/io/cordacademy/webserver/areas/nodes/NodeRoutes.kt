@@ -11,6 +11,9 @@ import net.corda.core.messaging.CordaRPCOps
 import java.time.ZoneOffset
 import java.time.ZonedDateTime
 
+/**
+ * Defines the node routes for the web server.
+ */
 fun Route.nodeRoutes(rpc: CordaRPCOps) = route("/nodes") {
 
     get {
