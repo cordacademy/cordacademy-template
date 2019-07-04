@@ -15,6 +15,16 @@ buildscript {
         log4j_group = "org.apache.logging.log4j"
         log4j_version = "2.11.2"
 
+        logback_group = "ch.qos.logback"
+        logback_version = "1.2.3"
+
+        jackson_group = "com.fasterxml.jackson.datatype"
+        jackson_version = "2.9.8"
+
+        ktor_group = "io.ktor"
+        ktor_version = "1.2.2"
+        ktor_kotlin_version = "1.3.40"
+
         cordapp_platform_version = 4
     }
 
@@ -26,7 +36,7 @@ buildscript {
     }
 
     dependencies {
-        classpath "$kotlin_group:kotlin-gradle-plugin:$kotlin_version"
+        classpath "$kotlin_group:kotlin-gradle-plugin:$ktor_kotlin_version"
         classpath "$corda_gradle_plugin_group:cordapp:$corda_gradle_plugin_version"
         classpath "$corda_gradle_plugin_group:cordformation:$corda_gradle_plugin_version"
         classpath "$corda_gradle_plugin_group:quasar-utils:$corda_gradle_plugin_version"
@@ -107,7 +117,7 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['jar']) {
         // TODO : Uncomment the lines below and modify accordingly.
         // cordapp project(":my-first-cordapp-contract")
         // cordapp project(":my-first-cordapp-workflow")
-        rpcUsers = [[user: "user1", "password": "test", "permissions": ["ALL"]]]
+        rpcUsers = [[user: "guest", "password": "letmein", "permissions": ["ALL"]]]
     }
 
     node {
@@ -122,10 +132,10 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['jar']) {
     }
     node {
         name "O=PartyA,L=London,C=GB"
-        p2pPort 10005
+        p2pPort 10004
         rpcSettings {
-            address("localhost:10006")
-            adminAddress("localhost:10046")
+            address("localhost:10005")
+            adminAddress("localhost:10045")
         }
     }
     node {
@@ -138,10 +148,10 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['jar']) {
     }
     node {
         name "O=PartyC,L=Paris,C=FR"
-        p2pPort 10011
+        p2pPort 10012
         rpcSettings {
-            address("localhost:10012")
-            adminAddress("localhost:10052")
+            address("localhost:10013")
+            adminAddress("localhost:10053")
         }
     }
 }

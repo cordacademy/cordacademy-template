@@ -1,0 +1,43 @@
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+    maven { url 'https://jitpack.io' }
+    maven { url 'https://ci-artifactory.corda.r3cev.com/artifactory/corda' }
+    maven { url 'https://repo.gradle.org/gradle/libs-releases' }
+}
+
+apply plugin: 'kotlin'
+
+dependencies {
+    // Kotlin Dependencies
+    implementation "$kotlin_group:kotlin-stdlib-jdk8:$ktor_kotlin_version"
+
+    // Corda Development Dependencies
+    implementation "$corda_group:corda-core:$corda_release_version"
+    implementation "$corda_group:corda-rpc:$corda_release_version"
+
+    // CorDapp Dependencies
+    // TODO : Uncomment and modify with the package names for your cordapps.
+    // implementation project(":cordacademy-play-obligation-contract")
+    // implementation project(":cordacademy-play-obligation-workflow")
+
+    // Ktor Dependencies
+    implementation "$ktor_group:ktor-server-netty:$ktor_version"
+    implementation "$ktor_group:ktor-jackson:$ktor_version"
+    implementation "$jackson_group:jackson-datatype-jsr310:$jackson_version"
+    implementation "$logback_group:logback-classic:$logback_version"
+}
+
+jar { exclude '**/log4j2*.xml' }
+
+// test { useJUnitPlatform() }
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
+    kotlinOptions {
+        languageVersion = "1.3"
+        apiVersion = "1.3"
+        jvmTarget = "1.8"
+        javaParameters = true
+    }
+}
