@@ -69,7 +69,7 @@ You can get a better feel for what the template offers if you open the repositor
 
 - **Run In-Memory Network** starts the in-memory network driver with a notary and three party nodes. These nodes have been configured to use the same allocated RPC ports as `deployNodes` so that you don't need to edit your configuration between the two. Ensure that the in-memory network is fully running before you start any web server tasks.
 
-- **Run WebServer (Party *)** starts a Ktor web server for the specified party. 
+- **Run WebServer (Party \*)** starts a Ktor web server for the specified party. 
 - **Run All WebServers** combines individual tasks to run all of the Ktor web servers at once.
 
 Web server ports are conveniently aligned with the node's RPC port number. Starting from port 8080, subtract 10000 from the RPC port number and add the remainder; for example:
