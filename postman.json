@@ -1,0 +1,973 @@
+{
+	"info": {
+		"_postman_id": "d5129f74-b1cd-4b1f-a561-928e41a6189a",
+		"name": "Cordacademy Template",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Party A",
+			"item": [
+				{
+					"name": "/admin/nmc/clear",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_a}}/admin/nmc/clear",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_a}}",
+							"path": [
+								"admin",
+								"nmc",
+								"clear"
+							]
+						},
+						"description": "Clears the network map cache"
+					},
+					"response": []
+				},
+				{
+					"name": "/admin/nmc/refresh",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_a}}/admin/nmc/refresh",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_a}}",
+							"path": [
+								"admin",
+								"nmc",
+								"refresh"
+							]
+						},
+						"description": "Refreshes the network map cache"
+					},
+					"response": []
+				},
+				{
+					"name": "/admin/flows/registered",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_a}}/admin/flows/registered",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_a}}",
+							"path": [
+								"admin",
+								"flows",
+								"registered"
+							]
+						},
+						"description": "Lists the flows that are registered by the node."
+					},
+					"response": []
+				},
+				{
+					"name": "/admin/flows/draining",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_a}}/admin/flows/draining",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_a}}",
+							"path": [
+								"admin",
+								"flows",
+								"draining"
+							]
+						},
+						"description": "Determines whether flow draining is enabled on the node."
+					},
+					"response": []
+				},
+				{
+					"name": "/admin/flows/draining/enable",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_a}}/admin/flows/draining/enable",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_a}}",
+							"path": [
+								"admin",
+								"flows",
+								"draining",
+								"enable"
+							]
+						},
+						"description": "Enables flow draining."
+					},
+					"response": []
+				},
+				{
+					"name": "/admin/flows/draining/disable",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_a}}/admin/flows/draining/disable",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_a}}",
+							"path": [
+								"admin",
+								"flows",
+								"draining",
+								"disable"
+							]
+						},
+						"description": "Disables flow draining."
+					},
+					"response": []
+				},
+				{
+					"name": "/nodes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_a}}/nodes",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_a}}",
+							"path": [
+								"nodes"
+							]
+						},
+						"description": "Gets detailed local and network node information."
+					},
+					"response": []
+				},
+				{
+					"name": "/nodes/time",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_a}}/nodes/time",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_a}}",
+							"path": [
+								"nodes",
+								"time"
+							]
+						},
+						"description": "Gets the current time of the local node."
+					},
+					"response": []
+				},
+				{
+					"name": "/nodes/local",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_a}}/nodes/local",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_a}}",
+							"path": [
+								"nodes",
+								"local"
+							]
+						},
+						"description": "Gets the local node identity."
+					},
+					"response": []
+				},
+				{
+					"name": "/nodes/network",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_a}}/nodes/network",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_a}}",
+							"path": [
+								"nodes",
+								"network"
+							]
+						},
+						"description": "Gets a list of network node identities."
+					},
+					"response": []
+				},
+				{
+					"name": "/nodes/shutdown",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_a}}/nodes/shutdown",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_a}}",
+							"path": [
+								"nodes",
+								"shutdown"
+							]
+						},
+						"description": "Determines whether a node shutdown is pending for the local node."
+					},
+					"response": []
+				},
+				{
+					"name": "/nodes/shutdown",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_a}}/nodes/shutdown",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_a}}",
+							"path": [
+								"nodes",
+								"shutdown"
+							]
+						},
+						"description": "Shuts down the local node."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Party B",
+			"item": [
+				{
+					"name": "/admin/nmc/clear",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_b}}/admin/nmc/clear",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_b}}",
+							"path": [
+								"admin",
+								"nmc",
+								"clear"
+							]
+						},
+						"description": "Clears the network map cache"
+					},
+					"response": []
+				},
+				{
+					"name": "/admin/nmc/refresh",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_b}}/admin/nmc/refresh",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_b}}",
+							"path": [
+								"admin",
+								"nmc",
+								"refresh"
+							]
+						},
+						"description": "Refreshes the network map cache"
+					},
+					"response": []
+				},
+				{
+					"name": "/admin/flows/registered",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_b}}/admin/flows/registered",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_b}}",
+							"path": [
+								"admin",
+								"flows",
+								"registered"
+							]
+						},
+						"description": "Lists the flows that are registered by the node."
+					},
+					"response": []
+				},
+				{
+					"name": "/admin/flows/draining",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_b}}/admin/flows/draining",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_b}}",
+							"path": [
+								"admin",
+								"flows",
+								"draining"
+							]
+						},
+						"description": "Determines whether flow draining is enabled on the node."
+					},
+					"response": []
+				},
+				{
+					"name": "/admin/flows/draining/enable",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_b}}/admin/flows/draining/enable",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_b}}",
+							"path": [
+								"admin",
+								"flows",
+								"draining",
+								"enable"
+							]
+						},
+						"description": "Enables flow draining."
+					},
+					"response": []
+				},
+				{
+					"name": "/admin/flows/draining/disable",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_b}}/admin/flows/draining/disable",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_b}}",
+							"path": [
+								"admin",
+								"flows",
+								"draining",
+								"disable"
+							]
+						},
+						"description": "Disables flow draining."
+					},
+					"response": []
+				},
+				{
+					"name": "/nodes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_b}}/nodes",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_b}}",
+							"path": [
+								"nodes"
+							]
+						},
+						"description": "Gets detailed local and network node information."
+					},
+					"response": []
+				},
+				{
+					"name": "/nodes/time",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_b}}/nodes/time",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_b}}",
+							"path": [
+								"nodes",
+								"time"
+							]
+						},
+						"description": "Gets the current time of the local node."
+					},
+					"response": []
+				},
+				{
+					"name": "/nodes/local",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_b}}/nodes/local",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_b}}",
+							"path": [
+								"nodes",
+								"local"
+							]
+						},
+						"description": "Gets the local node identity."
+					},
+					"response": []
+				},
+				{
+					"name": "/nodes/network",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_b}}/nodes/network",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_b}}",
+							"path": [
+								"nodes",
+								"network"
+							]
+						},
+						"description": "Gets a list of network node identities."
+					},
+					"response": []
+				},
+				{
+					"name": "/nodes/shutdown",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_b}}/nodes/shutdown",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_b}}",
+							"path": [
+								"nodes",
+								"shutdown"
+							]
+						},
+						"description": "Determines whether a node shutdown is pending for the local node."
+					},
+					"response": []
+				},
+				{
+					"name": "/nodes/shutdown",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_b}}/nodes/shutdown",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_b}}",
+							"path": [
+								"nodes",
+								"shutdown"
+							]
+						},
+						"description": "Shuts down the local node."
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "febeb6f9-fb15-4d3f-ba22-a4b2cdc95c84",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "830eed27-8621-4473-98c3-4f0775adb348",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Party C",
+			"item": [
+				{
+					"name": "/admin/nmc/clear",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_c}}/admin/nmc/clear",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_c}}",
+							"path": [
+								"admin",
+								"nmc",
+								"clear"
+							]
+						},
+						"description": "Clears the network map cache"
+					},
+					"response": []
+				},
+				{
+					"name": "/admin/nmc/refresh",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_c}}/admin/nmc/refresh",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_c}}",
+							"path": [
+								"admin",
+								"nmc",
+								"refresh"
+							]
+						},
+						"description": "Refreshes the network map cache"
+					},
+					"response": []
+				},
+				{
+					"name": "/admin/flows/registered",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_c}}/admin/flows/registered",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_c}}",
+							"path": [
+								"admin",
+								"flows",
+								"registered"
+							]
+						},
+						"description": "Lists the flows that are registered by the node."
+					},
+					"response": []
+				},
+				{
+					"name": "/admin/flows/draining",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_c}}/admin/flows/draining",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_c}}",
+							"path": [
+								"admin",
+								"flows",
+								"draining"
+							]
+						},
+						"description": "Determines whether flow draining is enabled on the node."
+					},
+					"response": []
+				},
+				{
+					"name": "/admin/flows/draining/enable",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_c}}/admin/flows/draining/enable",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_c}}",
+							"path": [
+								"admin",
+								"flows",
+								"draining",
+								"enable"
+							]
+						},
+						"description": "Enables flow draining."
+					},
+					"response": []
+				},
+				{
+					"name": "/admin/flows/draining/disable",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_c}}/admin/flows/draining/disable",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_c}}",
+							"path": [
+								"admin",
+								"flows",
+								"draining",
+								"disable"
+							]
+						},
+						"description": "Disables flow draining."
+					},
+					"response": []
+				},
+				{
+					"name": "/nodes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_c}}/nodes",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_c}}",
+							"path": [
+								"nodes"
+							]
+						},
+						"description": "Gets detailed local and network node information."
+					},
+					"response": []
+				},
+				{
+					"name": "/nodes/time",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_c}}/nodes/time",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_c}}",
+							"path": [
+								"nodes",
+								"time"
+							]
+						},
+						"description": "Gets the current time of the local node."
+					},
+					"response": []
+				},
+				{
+					"name": "/nodes/local",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_c}}/nodes/local",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_c}}",
+							"path": [
+								"nodes",
+								"local"
+							]
+						},
+						"description": "Gets the local node identity."
+					},
+					"response": []
+				},
+				{
+					"name": "/nodes/network",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_c}}/nodes/network",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_c}}",
+							"path": [
+								"nodes",
+								"network"
+							]
+						},
+						"description": "Gets a list of network node identities."
+					},
+					"response": []
+				},
+				{
+					"name": "/nodes/shutdown",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_c}}/nodes/shutdown",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_c}}",
+							"path": [
+								"nodes",
+								"shutdown"
+							]
+						},
+						"description": "Determines whether a node shutdown is pending for the local node."
+					},
+					"response": []
+				},
+				{
+					"name": "/nodes/shutdown",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_c}}/nodes/shutdown",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_c}}",
+							"path": [
+								"nodes",
+								"shutdown"
+							]
+						},
+						"description": "Shuts down the local node."
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "febeb6f9-fb15-4d3f-ba22-a4b2cdc95c84",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "830eed27-8621-4473-98c3-4f0775adb348",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"id": "c253ea55-a3d4-4a5d-9763-9fba6f91cb9e",
+			"key": "port_a",
+			"value": "8085",
+			"type": "string"
+		},
+		{
+			"id": "b42b1fee-f71e-4eb4-a964-bc346dabb9bf",
+			"key": "port_b",
+			"value": "8089",
+			"type": "string"
+		},
+		{
+			"id": "96bd1ce8-d81d-43ab-a101-21d6abd2c8a0",
+			"key": "port_c",
+			"value": "8093",
+			"type": "string"
+		}
+	]
+}
