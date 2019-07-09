@@ -1,6 +1,7 @@
 package io.cordacademy.test
 
 import net.corda.core.concurrent.CordaFuture
+import net.corda.core.flows.FlowLogic
 import net.corda.core.identity.Party
 import net.corda.testing.core.singleIdentity
 import net.corda.testing.node.MockNetwork
@@ -96,6 +97,8 @@ abstract class FlowTestNetwork(private vararg val cordapps: String) {
         _partyA = nodeA.info.singleIdentity()
         _partyB = nodeB.info.singleIdentity()
         _partyC = nodeC.info.singleIdentity()
+
+        initialize()
     }
 
     /**
@@ -117,4 +120,18 @@ abstract class FlowTestNetwork(private vararg val cordapps: String) {
         network.runNetwork()
         return result
     }
+
+    /**
+     * Provides a generic mechanism for registering initiated flows.
+     *
+     * @param T The initiated flow to register.
+     */
+    protected inline fun <reified T : FlowLogic<*>> StartedMockNode.registerInitiatedFlow() {
+        registerInitiatedFlow(T::class.java)
+    }
+
+    /**
+     * Provides a mechanism to include extra test initialization.
+     */
+    protected open fun initialize() {}
 }
