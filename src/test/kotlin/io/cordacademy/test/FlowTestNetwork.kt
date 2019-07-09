@@ -15,23 +15,21 @@ import org.junit.jupiter.api.BeforeEach
  *
  * @param cordapps A list of cordapps which should be loaded by the mock network.
  */
-abstract class MockNetworkTest(private vararg val cordapps: String) {
-
-    //region initialization members
+abstract class FlowTestNetwork(private vararg val cordapps: String) {
 
     private lateinit var _network: MockNetwork
 
     private lateinit var _notaryNode: StartedMockNode
-    private lateinit var _nodeA: StartedMockNode
-    private lateinit var _nodeB: StartedMockNode
-    private lateinit var _nodeC: StartedMockNode
-
     private lateinit var _notaryParty: Party
-    private lateinit var _partyA: Party
-    private lateinit var _partyB: Party
-    private lateinit var _partyC: Party
 
-    //endregion
+    private lateinit var _nodeA: StartedMockNode
+    private lateinit var _partyA: Party
+
+    private lateinit var _nodeB: StartedMockNode
+    private lateinit var _partyB: Party
+
+    private lateinit var _nodeC: StartedMockNode
+    private lateinit var _partyC: Party
 
     /**
      * Gets the mock network.
