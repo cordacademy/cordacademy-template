@@ -6,7 +6,7 @@
 2. [Quick Start Guide](#quick-start-guide)
 3. [Running The Web Server](#running-the-web-server)
 4. [Configuring Your CorDapp](#configuring-your-cordapp)
-5. [Writing Unit Tests](#writing-unit-tests)
+5. [Testing Your CorDapp](#testing-your-cordapp)
 6. [Getting Template Updates](#getting-template-updates)
 7. [Known Problems](#known-problems)
 8. [Contribution](#contribution)
@@ -160,17 +160,19 @@ _Keep an eye out for **TODO** comments in `build.gradle` files. They serve as in
 
 
 
-# Writing Unit Tests
+# Testing Your CorDapp
 
-This template provides a handy class for implementing unit tests that utilise the Corda in-memory mock network driver. To implement this class, ensure you have a Gradle dependency in your test module to the base project, for example:
+This template provides some extensible utility classes to help you write effective unit and integration tests. In order to gain access to the built-in test classes, ensure you have a gradle dependency in your test module on the base project:
 
-```groovy
+```
 dependencies {
-    testCompile project(":<project-name>")
+    testImplementation project(":<my-first-cordapp>")
 }
 ```
 
-The `MockNetworkTest` abstract class provides:
+### Flow Test Network
+
+The `FlowTestNetwork` class is an abstract class that is designed to make writing unit tests easier. All you need to do is extend your flow test class and your test class will have access to:
 
 - An in-memory Corda mock network.
 - A default notary and associated party.
@@ -179,7 +181,7 @@ The `MockNetworkTest` abstract class provides:
 - `@AfterEach` finalisation of the network.
 - A `run` utility method that returns a `CordaFuture<T>` having run the network.
 
-### Example
+#### Example
 
 ```kotlin
 package my.unit.tests
@@ -204,7 +206,49 @@ class MyUnitTests : MockNetworkTest("my.cordapp.package") {
 }
 ```
 
+### Integration Test Network
 
+The `IntegrationTestNetwork` class is an abstract class designed to make writing integration tests easier. All you need to do is extend your flow test class and your test class will have access to:
+
+- 3 x test identities.
+- 3 x node handles with RPC.
+
+#### Example
+
+```kotlin
+package my.unit.tests
+
+class MyUnitTests : IntegrationNetworkTest("my.cordapp.package") {
+
+    @Test
+    fun `my first Corda unit test should do something cool`() {
+    
+        // Arrange
+        val timeout = Duration.ofSeconds(10)
+        
+        // Act
+        val result = nodeA.rpc.startTrackedFlow(::MyCordaFlow, partyB).getOrThrow(10)
+        
+        // Assert
+        assertEquals(result, "cool!")
+    }
+}
+```
+
+**Note that due to the expensive nature of spinning up a driver based network, integration tests will be slow, as the network will be spun up and spun down for every test. We're working on improving this in future versions of the template.**
+
+### Node Driver
+
+The `NodeDriver` class simply extends the `IntegrationFlowTest` class, but also has a run configuration associated with it in IntelliJ, allowing you to execute a driver based in-memory Corda network for manual testing. All you need to do in the `NodeDriver.kt` file is specify which CorDapps you want the network to load.
+
+```kotlin
+class NodeDriver : IntegrationTestNetwork(
+    "my.first.cordapp.contract",
+    "my.first.cordapp.workflow"
+)
+```
+
+Everything else will be handled for you!
 
 # Getting Template Updates
 
