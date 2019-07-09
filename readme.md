@@ -227,7 +227,7 @@ class MyUnitTests : IntegrationNetworkTest("my.cordapp.package") {
         val timeout = Duration.ofSeconds(10)
         
         // Act
-        val result = nodeA.rpc.startTrackedFlow(::MyCordaFlow, partyB).getOrThrow(10)
+        val result = nodeA.rpc.startTrackedFlow(::MyCordaFlow, partyB).returnValue.getOrThrow(10)
         
         // Assert
         assertEquals(result, "cool!")
