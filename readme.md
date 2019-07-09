@@ -162,11 +162,11 @@ _Keep an eye out for **TODO** comments in `build.gradle` files. They serve as in
 
 # Testing Your CorDapp
 
-This template provides some extensible utility classes to help you write effective unit and integration tests. In order to gain access to the built-in test classes, ensure you have a gradle dependency in your test module on the base project:
+This template provides some extensible utility classes to help you write effective unit and integration tests. In order to gain access to the built-in test classes, ensure you have a gradle dependency in your test module on the `cordacademy-test` project.
 
-```
+```groovy
 dependencies {
-    testImplementation project(":<my-first-cordapp>")
+    testImplementation project(":cordacademy-test")
 }
 ```
 
