@@ -73,26 +73,6 @@ dependencies {
     cordaCompile "$corda_group:corda:$corda_release_version"
     cordaCompile "$corda_group:corda-node:$corda_release_version"
     cordaRuntime "$log4j_group:log4j-slf4j-impl:$log4j_version"
-
-    // Test Dependencies
-    testRuntimeOnly "$junit_group:junit-jupiter-engine:$junit_version"
-    testImplementation "$junit_group:junit-jupiter-api:$junit_version"
-    testImplementation "$kotlin_group:kotlin-test:$kotlin_version"
-    testImplementation "$corda_group:corda-node-driver:$corda_release_version"
-}
-
-configurations {
-    all {
-        resolutionStrategy {
-            eachDependency { details ->
-                def requested = details.requested
-
-                if (requested.group == 'org.jetbrains.kotlin' && requested.name.startsWith("kotlin-stdlib")) {
-                    details.useVersion kotlin_version
-                }
-            }
-        }
-    }
 }
 
 jar { exclude '**/log4j2*.xml' }

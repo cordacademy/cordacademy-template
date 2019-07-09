@@ -318,7 +318,9 @@ You may encounter an issue where unit tests don't execute because of a lack of p
 sudo chmod +x ./gradlew
 ```
 
+### IntelliJ Run Configurations Don't Work
 
+Sometimes you will see a red cross over the top of an intelliJ run configuration indicating that it's not working. This usually happens because IntelliJ either forgets or resets which module the run configuration is intended to run from. You can _usually_ fix this by selecting the appropriate module.
 
 # Contribution
 
