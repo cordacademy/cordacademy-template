@@ -26,6 +26,7 @@ We use this template as the basis for all playground and laboratory samples, but
 - An in-memory node driver based Corda network for manual testing.
 - A web-server with basic node, network and administration functionality.
 - IntelliJ run configurations for gradle tasks, in-memory network and web servers.
+- Postman configuration for all web-servers.
 
 
 
