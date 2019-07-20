@@ -274,7 +274,7 @@ class MyIntegrationTests : IntegrationTest("my.cordapp.package") {
 
 **Note that due to the expensive nature of spinning up a driver based network, integration tests will be slow, as the network will be spun up and spun down for every test. We're working on improving this in future versions of the template.**
 
-### [NodeDriver](https://github.com/cordacademy/cordacademy-template/blob/master/cordacademy-test/src/main/kotlin/io/cordacademy/test/NodeDriver.kt)
+### [NodeDriver](https://github.com/cordacademy/cordacademy-template/blob/master/src/test/kotlin/NodeDriver.kt)
 
 The `NodeDriver` class simply extends the `IntegrationTest` class, but also has a run configuration associated with it in IntelliJ, allowing you to execute a driver based in-memory Corda network for manual testing. All you need to do in the `NodeDriver.kt` file is specify which CorDapps you want the network to load.
 
@@ -286,6 +286,8 @@ class NodeDriver : IntegrationTest(
 ```
 
 Everything else will be handled for you!
+
+**Note that `NodeDriver` is located in the parent module, rather than in the `cordacademy-test` module. This is because it requires dependencies on your CorDapp modules, however your CorDapp modules require a dependency on `cordacademy-test` which would create a circular dependency, and your code would not compile. Since the parent module also requires dependencies on your CorDapp modules in order to execute `deployNodes` correctly, this is a logical place to also maintain your in-memory node driver network.**
 
 ### [Test Data](https://github.com/cordacademy/cordacademy-template/blob/master/cordacademy-test/src/main/kotlin/io/cordacademy/test/TestData.kt)
 
