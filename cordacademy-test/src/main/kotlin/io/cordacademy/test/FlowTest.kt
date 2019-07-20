@@ -78,39 +78,6 @@ abstract class FlowTest(private vararg val cordapps: String) {
     protected val partyC: Party get() = _partyC
 
     /**
-     * Initializes the mock network and participants.
-     */
-    @BeforeEach
-    fun setup() {
-        _network = MockNetwork(
-            MockNetworkParameters(
-                cordappsForAllNodes = cordapps.map { TestCordapp.findCordapp(it) }
-            )
-        )
-
-        _notaryNode = network.defaultNotaryNode
-        _nodeA = network.createPartyNode(PARTY_A.name)
-        _nodeB = network.createPartyNode(PARTY_B.name)
-        _nodeC = network.createPartyNode(PARTY_C.name)
-
-        _notaryParty = notaryNode.info.singleIdentity()
-        _partyA = nodeA.info.singleIdentity()
-        _partyB = nodeB.info.singleIdentity()
-        _partyC = nodeC.info.singleIdentity()
-
-        initialize()
-    }
-
-    /**
-     * Finalizes the mock network.
-     */
-    @AfterEach
-    fun tearDown() {
-        finalize()
-        network.stopNodes()
-    }
-
-    /**
      * Runs the mock network and returns a {@code CordaFuture<T>) from the specified function.
      *
      * @param function The function which will be run by the network.
@@ -140,4 +107,37 @@ abstract class FlowTest(private vararg val cordapps: String) {
      *Provides pre tear-down test finalization.
      */
     protected open fun finalize() = Unit
+
+    /**
+     * Initializes the test container.
+     */
+    @BeforeEach
+    private fun setup() {
+        _network = MockNetwork(
+            MockNetworkParameters(
+                cordappsForAllNodes = cordapps.map { TestCordapp.findCordapp(it) }
+            )
+        )
+
+        _notaryNode = network.defaultNotaryNode
+        _nodeA = network.createPartyNode(IDENTITY_A.name)
+        _nodeB = network.createPartyNode(IDENTITY_B.name)
+        _nodeC = network.createPartyNode(IDENTITY_C.name)
+
+        _notaryParty = notaryNode.info.singleIdentity()
+        _partyA = nodeA.info.singleIdentity()
+        _partyB = nodeB.info.singleIdentity()
+        _partyC = nodeC.info.singleIdentity()
+
+        initialize()
+    }
+
+    /**
+     * Finalizes the test container.
+     */
+    @AfterEach
+    private fun tearDown() {
+        finalize()
+        network.stopNodes()
+    }
 }

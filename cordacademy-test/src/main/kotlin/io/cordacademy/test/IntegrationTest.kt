@@ -40,8 +40,10 @@ abstract class IntegrationTest(private vararg val cordapps: String) {
      */
     protected val nodeC: NodeHandle get() = _nodeC
 
-    @BeforeEach
-    fun setup() {
+    /**
+     * Creates and starts the in-memory network.
+     */
+    fun start() {
         val rpcUsers: List<User> = listOf(User("guest", "letmein", permissions = setOf("ALL")))
 
         val parameters = DriverParameters(
@@ -52,16 +54,25 @@ abstract class IntegrationTest(private vararg val cordapps: String) {
         )
 
         driver(parameters) {
-            _nodeA = startNode(providedName = PARTY_A.name, rpcUsers = rpcUsers).getOrThrow()
-            _nodeB = startNode(providedName = PARTY_B.name, rpcUsers = rpcUsers).getOrThrow()
-            _nodeC = startNode(providedName = PARTY_C.name, rpcUsers = rpcUsers).getOrThrow()
+            _nodeA = startNode(providedName = IDENTITY_A.name, rpcUsers = rpcUsers).getOrThrow()
+            _nodeB = startNode(providedName = IDENTITY_B.name, rpcUsers = rpcUsers).getOrThrow()
+            _nodeC = startNode(providedName = IDENTITY_C.name, rpcUsers = rpcUsers).getOrThrow()
 
             listOf(_nodeA, _nodeB, _nodeC).forEach { logStartedNode(it) }
         }
     }
 
+    /**
+     * Initializes the test container.
+     */
+    @BeforeEach
+    private fun setup() = start()
+
+    /**
+     * Finalizes the test container.
+     */
     @AfterEach
-    fun tearDown() {
+    private fun tearDown() {
         log.info("Closing down integration test network.")
     }
 

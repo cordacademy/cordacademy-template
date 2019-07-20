@@ -1,19 +1,17 @@
 package io.cordacademy.test
 
+import net.corda.core.contracts.ContractClassName
 import net.corda.testing.core.TestIdentity
 import net.corda.testing.node.MockServices
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
 
 /**
  * Provides utility for implementing Corda mock service based tests.
  *
  * @param cordapps A list of cordapps which should be loaded by the mock services.
  */
-abstract class ContractTest(vararg cordapps: String) {
-
-    /**
-     * Gets the mocked Corda services available to this test.
-     */
-    protected val services = MockServices(cordapps.toList())
+abstract class ContractTest(private val cordapps: List<String>, private val contracts: List<ContractClassName>) {
 
     protected companion object {
 
@@ -33,4 +31,37 @@ abstract class ContractTest(vararg cordapps: String) {
          */
         fun keysOf(vararg identities: TestIdentity) = identities.map { it.publicKey }
     }
+
+    private lateinit var _services: MockServices
+
+    /**
+     * Gets the mocked Corda services available to this test.
+     */
+    protected val services: MockServices get() = _services
+
+    /**
+     * Provides post startup test initialization.
+     */
+    protected open fun initialize() = Unit
+
+    /**
+     *Provides pre tear-down test finalization.
+     */
+    protected open fun finalize() = Unit
+
+    /**
+     * Initializes the test container.
+     */
+    @BeforeEach
+    private fun setup() {
+        _services = MockServices(cordapps)
+        contracts.forEach { _services.addMockCordapp(it) }
+        initialize()
+    }
+
+    /**
+     * Finalizes the test container.
+     */
+    @AfterEach
+    private fun tearDown() = finalize()
 }

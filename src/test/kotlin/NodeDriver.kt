@@ -1,4 +1,4 @@
-package io.cordacademy.test
+import io.cordacademy.test.IntegrationTest
 
 class NodeDriver : IntegrationTest(
     // TODO : Add cordapp packages here; for example...
@@ -7,6 +7,6 @@ class NodeDriver : IntegrationTest(
 ) {
     companion object {
         @JvmStatic
-        fun main(vararg args: String) = NodeDriver().setup()
+        fun main(vararg args: String) = NodeDriver().start()
     }
 }
