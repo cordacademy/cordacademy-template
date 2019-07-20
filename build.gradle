@@ -65,7 +65,7 @@ dependencies {
     cordaCompile "$corda_group:corda-core:$corda_release_version"
 
     // CorDapp Dependencies
-    // TODO : Uncomment the lines below and modify accordingly.
+    // TODO : Add cordapp packages to your dependency configuration; for example...
     // cordapp project(":my-first-cordapp-contract")
     // cordapp project(":my-first-cordapp-workflow")
 
@@ -94,7 +94,7 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['jar']) {
         projectCordapp {
             deploy = false
         }
-        // TODO : Uncomment the lines below and modify accordingly.
+        // TODO : Add cordapp packages to your node deployment configuration; for example...
         // cordapp project(":my-first-cordapp-contract")
         // cordapp project(":my-first-cordapp-workflow")
         rpcUsers = [[user: "guest", "password": "letmein", "permissions": ["ALL"]]]
@@ -110,6 +110,7 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['jar']) {
         }
         cordapps.clear()
     }
+
     node {
         name "O=PartyA,L=London,C=GB"
         p2pPort 10004
@@ -118,6 +119,7 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['jar']) {
             adminAddress("localhost:10045")
         }
     }
+
     node {
         name "O=PartyB,L=New York,C=US"
         p2pPort 10008
@@ -126,6 +128,7 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['jar']) {
             adminAddress("localhost:10049")
         }
     }
+
     node {
         name "O=PartyC,L=Paris,C=FR"
         p2pPort 10012

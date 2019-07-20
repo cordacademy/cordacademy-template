@@ -19,13 +19,13 @@
 
 We use this template as the basis for all playground and laboratory samples, but you could also use it as a convenient starting block for building your own CorDapps! We've done most of the heavy lifting, so you can focus on more important parts of your application.
 
-At a glance...
+### What's In The Box?
 
 - All configuration and dependencies are structured and organised to make upgrading easier.
-- It contains an in-memory network driver which is convenient for testing.
-- It contains a web-server with basic node, network and administration functionality.
-- It contains helper classes for writing unit tests.
-- All gradle tasks, web servers and the in-memory network can be executed directly from IntelliJ IDEA.
+- Extensible classes for building consistent contract, workflow and integration tests.
+- An in-memory node driver based Corda network for manual testing.
+- A web-server with basic node, network and administration functionality.
+- IntelliJ run configurations for gradle tasks, in-memory network and web servers.
 
 
 
@@ -120,11 +120,14 @@ Since this template does not contain any CorDapp modules, there is no reason to 
 
 ```groovy
 cordapp {
+    signing {
+        enabled = true // or false if you want hash constraints.
+    }
     targetPlatformVersion cordapp_platform_version
     minimumPlatformVersion cordapp_platform_version
     contract {
         name "My First CorDapp Contract"
-        vendor "NewCo"
+        vendor "My Company"
         licence "Apache License, Version 2.0"
         versionId 1
     }
@@ -135,11 +138,14 @@ cordapp {
 
 ```groovy
 cordapp {
+    signing {
+        enabled = true
+    }
     targetPlatformVersion cordapp_platform_version
     minimumPlatformVersion cordapp_platform_version
     workflow {
         name "My First CorDapp Workflow"
-        vendor "NewCo"
+        vendor "My Company"
         licence "Apache License, Version 2.0"
         versionId 1
     }
@@ -162,7 +168,7 @@ _Keep an eye out for **TODO** comments in `build.gradle` files. They serve as in
 
 # Testing Your CorDapp
 
-This template provides some extensible utility classes to help you write effective unit and integration tests. In order to gain access to the built-in test classes, ensure you have a gradle dependency in your test module on the `cordacademy-test` project.
+This template provides some extensible utility classes to help you write consistent unit and integration tests. In order to gain access to the built-in test classes, ensure you have a gradle dependency in your test module on the `cordacademy-test` project.
 
 ```groovy
 dependencies {
@@ -170,26 +176,54 @@ dependencies {
 }
 ```
 
-### Flow Test Network
+### [Test Classes](https://github.com/cordacademy/cordacademy-template/tree/master/cordacademy-test/src/main/kotlin/io/cordacademy/test)
 
-The `FlowTestNetwork` class is an abstract class that is designed to make writing unit tests easier. All you need to do is extend your flow test class and your test class will have access to:
+The `ContractTest`, `FlowTest` and `IntegrationTest` abstract classes are designed to wrap all of the basic requirements for writing consistent contract, workflow and integration tests.
+
+### [ContractTest](https://github.com/cordacademy/cordacademy-template/blob/master/cordacademy-test/src/main/kotlin/io/cordacademy/test/ContractTest.kt)
+
+The `ContractTest` class provides utility for implementing Corda mock service based tests. The following example illustrates how to consume this class:
+
+```kotlin
+package my.contract.tests
+
+class MyContractTests : ContractTest("my.cordapp.package") {
+
+    @Test
+    fun `My contract should do something awesome`() {
+        services.ledger {
+            transaction {
+                input(DummyContract.ID, DUMMY_STATE)
+                output(DummyContract.ID, DUMMY_STATE)
+                command(keysOf(PARTY_A, PARTY_B), DummyContract.DummyCommand())
+                failsWith(DummyContract.DummyCommand.MY_FIRST_CONTRACT_RULE)
+            }
+        }
+    }
+}
+```
+
+### [FlowTest](https://github.com/cordacademy/cordacademy-template/blob/master/cordacademy-test/src/main/kotlin/io/cordacademy/test/FlowTest.kt)
+
+The `FlowTest` class provides utility for implementing Corda mock network based tests. By extending this class you get access to:
 
 - An in-memory Corda mock network.
 - A default notary and associated party.
 - 3 x test nodes and associated parties.
 - `@BeforeEach` initialisation of the network, nodes and parties.
 - `@AfterEach` finalisation of the network.
+- Extensible post-setup initialization and pre-teardown finalization.
 - A `run` utility method that returns a `CordaFuture<T>` having run the network.
 
-#### Example
+The following example illustrates how to consume this class:
 
 ```kotlin
-package my.unit.tests
+package my.workflow.tests
 
-class MyUnitTests : MockNetworkTest("my.cordapp.package") {
+class MyWorkflowTests : FlowTest("my.cordapp.package") {
 
     @Test
-    fun `my first Corda unit test should do something cool`() {
+    fun `My flow should do something awesome`() {
     
         // Arrange
         val flow = MyCordaFlow(partyB)
@@ -206,22 +240,24 @@ class MyUnitTests : MockNetworkTest("my.cordapp.package") {
 }
 ```
 
-### Integration Test Network
+### [IntegrationTest](https://github.com/cordacademy/cordacademy-template/blob/master/cordacademy-test/src/main/kotlin/io/cordacademy/test/IntegrationTest.kt)
 
-The `IntegrationTestNetwork` class is an abstract class designed to make writing integration tests easier. All you need to do is extend your flow test class and your test class will have access to:
+The `IntegrationTest` class provides utility for implementing Corda node driver based tests. By extending this class you get access to:
 
-- 3 x test identities.
-- 3 x node handles with RPC.
+- 3x node handles with RPC.
+- `@BeforeEach` initialisation of the network, nodes and identities.
 
-#### Example
+- `@AfterEach` finalisation of the network.
+
+The following example illustrates how to consume this class:
 
 ```kotlin
-package my.unit.tests
+package my.integration.tests
 
-class MyUnitTests : IntegrationNetworkTest("my.cordapp.package") {
+class MyIntegrationTests : IntegrationTest("my.cordapp.package") {
 
     @Test
-    fun `my first Corda unit test should do something cool`() {
+    fun `My node should do something awesome`() {
     
         // Arrange
         val timeout = Duration.ofSeconds(10)
@@ -237,18 +273,22 @@ class MyUnitTests : IntegrationNetworkTest("my.cordapp.package") {
 
 **Note that due to the expensive nature of spinning up a driver based network, integration tests will be slow, as the network will be spun up and spun down for every test. We're working on improving this in future versions of the template.**
 
-### Node Driver
+### [NodeDriver](https://github.com/cordacademy/cordacademy-template/blob/master/cordacademy-test/src/main/kotlin/io/cordacademy/test/NodeDriver.kt)
 
-The `NodeDriver` class simply extends the `IntegrationFlowTest` class, but also has a run configuration associated with it in IntelliJ, allowing you to execute a driver based in-memory Corda network for manual testing. All you need to do in the `NodeDriver.kt` file is specify which CorDapps you want the network to load.
+The `NodeDriver` class simply extends the `IntegrationTest` class, but also has a run configuration associated with it in IntelliJ, allowing you to execute a driver based in-memory Corda network for manual testing. All you need to do in the `NodeDriver.kt` file is specify which CorDapps you want the network to load.
 
 ```kotlin
-class NodeDriver : IntegrationTestNetwork(
+class NodeDriver : IntegrationTest(
     "my.first.cordapp.contract",
     "my.first.cordapp.workflow"
-)
+) { ... }
 ```
 
 Everything else will be handled for you!
+
+### [Test Data](https://github.com/cordacademy/cordacademy-template/blob/master/cordacademy-test/src/main/kotlin/io/cordacademy/test/TestData.kt)
+
+Finally, in addition to all of the extensible test classes, there are three test identities for `PARTY_A`, `PARTY_B` and `PARTY_C`, which use the same Corda X.500 names as the `deployNodes` gradle task, and the in-memory network. There is also an implementation of `DummyState` and `DummyContract` which are useful when writing contract tests.
 
 # Getting Template Updates
 
