@@ -12,11 +12,11 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 
 /**
- * Provides utility for implementing Corda mock network driver based tests.
+ * Provides utility for implementing Corda mock network based tests.
  *
  * @param cordapps A list of cordapps which should be loaded by the mock network.
  */
-abstract class FlowTestNetwork(private vararg val cordapps: String) {
+abstract class FlowTest(private vararg val cordapps: String) {
 
     private lateinit var _network: MockNetwork
 
@@ -89,9 +89,9 @@ abstract class FlowTestNetwork(private vararg val cordapps: String) {
         )
 
         _notaryNode = network.defaultNotaryNode
-        _nodeA = network.createPartyNode()
-        _nodeB = network.createPartyNode()
-        _nodeC = network.createPartyNode()
+        _nodeA = network.createPartyNode(PARTY_A.name)
+        _nodeB = network.createPartyNode(PARTY_B.name)
+        _nodeC = network.createPartyNode(PARTY_C.name)
 
         _notaryParty = notaryNode.info.singleIdentity()
         _partyA = nodeA.info.singleIdentity()
@@ -106,6 +106,7 @@ abstract class FlowTestNetwork(private vararg val cordapps: String) {
      */
     @AfterEach
     fun tearDown() {
+        finalize()
         network.stopNodes()
     }
 
@@ -131,7 +132,12 @@ abstract class FlowTestNetwork(private vararg val cordapps: String) {
     }
 
     /**
-     * Provides a mechanism to include extra test initialization.
+     * Provides post startup test initialization.
      */
-    protected open fun initialize() {}
+    protected open fun initialize() = Unit
+
+    /**
+     *Provides pre tear-down test finalization.
+     */
+    protected open fun finalize() = Unit
 }

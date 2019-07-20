@@ -20,7 +20,7 @@ fun main() {
     val configuration = Configuration()
     val rpcProxy = ConnectionProvider(configuration).proxy
 
-    val server = embeddedServer(Netty, configuration.serverPort) {
+    embeddedServer(Netty, configuration.serverPort) {
         install(DefaultHeaders)
         install(Compression)
         install(CallLogging)
@@ -41,7 +41,5 @@ fun main() {
             adminRoutes(rpcProxy)
             nodeRoutes(rpcProxy)
         }
-    }
-
-    server.start(wait = true)
+    }.start(wait = true)
 }
