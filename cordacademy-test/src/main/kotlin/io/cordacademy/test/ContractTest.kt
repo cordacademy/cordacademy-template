@@ -11,7 +11,10 @@ import org.junit.jupiter.api.BeforeEach
  *
  * @param cordapps A list of cordapps which should be loaded by the mock services.
  */
-abstract class ContractTest(private val cordapps: List<String>, private val contracts: List<ContractClassName>) {
+abstract class ContractTest(
+    private val cordapps: List<String>,
+    private val contracts: List<ContractClassName>
+) : AutoCloseable {
 
     protected companion object {
 
@@ -40,6 +43,11 @@ abstract class ContractTest(private val cordapps: List<String>, private val cont
     protected val services: MockServices get() = _services
 
     /**
+     * Closes this resource, relinquishing any underlying resources.
+     */
+    override fun close() = finalize()
+
+    /**
      * Provides post startup test initialization.
      */
     protected open fun initialize() = Unit
@@ -63,5 +71,5 @@ abstract class ContractTest(private val cordapps: List<String>, private val cont
      * Finalizes the test container.
      */
     @AfterEach
-    private fun tearDown() = finalize()
+    private fun tearDown() = close()
 }

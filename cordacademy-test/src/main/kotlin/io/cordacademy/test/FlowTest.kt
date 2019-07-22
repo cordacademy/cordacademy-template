@@ -16,7 +16,7 @@ import org.junit.jupiter.api.BeforeEach
  *
  * @param cordapps A list of cordapps which should be loaded by the mock network.
  */
-abstract class FlowTest(private vararg val cordapps: String) {
+abstract class FlowTest(private vararg val cordapps: String) : AutoCloseable {
 
     private lateinit var _network: MockNetwork
 
@@ -78,6 +78,11 @@ abstract class FlowTest(private vararg val cordapps: String) {
     protected val partyC: Party get() = _partyC
 
     /**
+     * Closes this resource, relinquishing any underlying resources.
+     */
+    override fun close() = finalize()
+
+    /**
      * Runs the mock network and returns a {@code CordaFuture<T>) from the specified function.
      *
      * @param function The function which will be run by the network.
@@ -137,7 +142,7 @@ abstract class FlowTest(private vararg val cordapps: String) {
      */
     @AfterEach
     private fun tearDown() {
-        finalize()
+        close()
         network.stopNodes()
     }
 }

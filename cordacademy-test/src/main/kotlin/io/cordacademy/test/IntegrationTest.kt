@@ -15,7 +15,7 @@ import org.junit.jupiter.api.BeforeEach
  *
  * @param cordapps A list of cordapps which should be loaded by the node driver network.
  */
-abstract class IntegrationTest(private vararg val cordapps: String) {
+abstract class IntegrationTest(private vararg val cordapps: String) : AutoCloseable {
 
     private companion object {
         val log = loggerFor<IntegrationTest>()
@@ -60,7 +60,24 @@ abstract class IntegrationTest(private vararg val cordapps: String) {
 
             listOf(_nodeA, _nodeB, _nodeC).forEach { logStartedNode(it) }
         }
+
+        initialize()
     }
+
+    /**
+     * Closes this resource, relinquishing any underlying resources.
+     */
+    override fun close() = finalize()
+
+    /**
+     * Provides post startup test initialization.
+     */
+    protected open fun initialize() = Unit
+
+    /**
+     *Provides pre tear-down test finalization.
+     */
+    protected open fun finalize() = Unit
 
     /**
      * Initializes the test container.
@@ -74,6 +91,7 @@ abstract class IntegrationTest(private vararg val cordapps: String) {
     @AfterEach
     private fun tearDown() {
         log.info("Closing down integration test network.")
+        close()
     }
 
     private fun logStartedNode(node: NodeHandle) = log.info(
