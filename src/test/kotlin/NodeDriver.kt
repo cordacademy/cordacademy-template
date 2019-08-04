@@ -7,6 +7,6 @@ class NodeDriver : IntegrationTest(
 ) {
     companion object {
         @JvmStatic
-        fun main(vararg args: String) = NodeDriver().start()
+        fun main(vararg args: String) = NodeDriver().start {}
     }
 }

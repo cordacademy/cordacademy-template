@@ -7,15 +7,13 @@ import net.corda.testing.driver.NodeHandle
 import net.corda.testing.driver.driver
 import net.corda.testing.node.TestCordapp
 import net.corda.testing.node.User
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
 
 /**
  * Provides utility for implementing Corda node driver based tests.
  *
  * @param cordapps A list of cordapps which should be loaded by the node driver network.
  */
-abstract class IntegrationTest(private vararg val cordapps: String) : AutoCloseable {
+abstract class IntegrationTest(private vararg val cordapps: String) {
 
     private companion object {
         val log = loggerFor<IntegrationTest>()
@@ -43,7 +41,7 @@ abstract class IntegrationTest(private vararg val cordapps: String) : AutoClosea
     /**
      * Creates and starts the in-memory network.
      */
-    fun start() {
+    fun start(action: () -> Unit) {
         val rpcUsers: List<User> = listOf(User("guest", "letmein", permissions = setOf("ALL")))
 
         val parameters = DriverParameters(
@@ -58,16 +56,17 @@ abstract class IntegrationTest(private vararg val cordapps: String) : AutoClosea
             _nodeB = startNode(providedName = IDENTITY_B.name, rpcUsers = rpcUsers).getOrThrow()
             _nodeC = startNode(providedName = IDENTITY_C.name, rpcUsers = rpcUsers).getOrThrow()
 
-            listOf(_nodeA, _nodeB, _nodeC).forEach { logStartedNode(it) }
+            listOf(_nodeA, _nodeB, _nodeC).forEach {
+                val identity = it.nodeInfo.legalIdentities.first()
+                val rpcAddress = it.rpcAddress
+                log.info("Node registered with RPC address '$rpcAddress' for node '$identity'.")
+            }
+
+            initialize()
+            action()
+            finalize()
         }
-
-        initialize()
     }
-
-    /**
-     * Closes this resource, relinquishing any underlying resources.
-     */
-    override fun close() = finalize()
 
     /**
      * Provides post startup test initialization.
@@ -78,23 +77,4 @@ abstract class IntegrationTest(private vararg val cordapps: String) : AutoClosea
      *Provides pre tear-down test finalization.
      */
     protected open fun finalize() = Unit
-
-    /**
-     * Initializes the test container.
-     */
-    @BeforeEach
-    private fun setup() = start()
-
-    /**
-     * Finalizes the test container.
-     */
-    @AfterEach
-    private fun tearDown() {
-        log.info("Closing down integration test network.")
-        close()
-    }
-
-    private fun logStartedNode(node: NodeHandle) = log.info(
-        "Node registered with RPC address '${node.rpcAddress}' for '${node.nodeInfo.legalIdentities.first()}'"
-    )
 }
