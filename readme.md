@@ -243,12 +243,7 @@ class MyWorkflowTests : FlowTest("my.cordapp.package") {
 
 ### [IntegrationTest](https://github.com/cordacademy/cordacademy-template/blob/master/cordacademy-test/src/main/kotlin/io/cordacademy/test/IntegrationTest.kt)
 
-The `IntegrationTest` class provides utility for implementing Corda node driver based tests. By extending this class you get access to:
-
-- 3x node handles with RPC.
-- `@BeforeEach` initialisation of the network, nodes and identities.
-
-- `@AfterEach` finalisation of the network.
+The `IntegrationTest` class provides utility for implementing Corda node driver based tests.
 
 The following example illustrates how to consume this class:
 
@@ -258,7 +253,7 @@ package my.integration.tests
 class MyIntegrationTests : IntegrationTest("my.cordapp.package") {
 
     @Test
-    fun `My node should do something awesome`() {
+    fun `My node should do something awesome`() = start {
     
         // Arrange
         val timeout = Duration.ofSeconds(10)
