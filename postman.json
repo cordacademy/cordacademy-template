@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "d5129f74-b1cd-4b1f-a561-928e41a6189a",
+		"_postman_id": "abf692ed-a0ee-4672-908d-ec8939e8fe31",
 		"name": "Cordacademy Template",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -302,6 +302,64 @@
 						"description": "Shuts down the local node."
 					},
 					"response": []
+				},
+				{
+					"name": "/attachments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_a}}/attachments?id=YOUR_ATTACHMENT_ID",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_a}}",
+							"path": [
+								"attachments"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "YOUR_ATTACHMENT_ID"
+								}
+							]
+						},
+						"description": "Determines whether an attachment exists in the vault."
+					},
+					"response": []
+				},
+				{
+					"name": "/attachments",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"type": "file",
+									"src": ""
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:{{port_a}}/attachments",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_a}}",
+							"path": [
+								"attachments"
+							]
+						},
+						"description": "Uploads an attachment to the node."
+					},
+					"response": []
 				}
 			]
 		},
@@ -600,6 +658,64 @@
 							]
 						},
 						"description": "Shuts down the local node."
+					},
+					"response": []
+				},
+				{
+					"name": "/attachments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_b}}/attachments?id=YOUR_ATTACHMENT_ID",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_b}}",
+							"path": [
+								"attachments"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "YOUR_ATTACHMENT_ID"
+								}
+							]
+						},
+						"description": "Determines whether an attachment exists in the vault."
+					},
+					"response": []
+				},
+				{
+					"name": "/attachments",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"type": "file",
+									"src": ""
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:{{port_b}}/attachments",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_b}}",
+							"path": [
+								"attachments"
+							]
+						},
+						"description": "Uploads an attachment to the node."
 					},
 					"response": []
 				}
@@ -922,6 +1038,64 @@
 							]
 						},
 						"description": "Shuts down the local node."
+					},
+					"response": []
+				},
+				{
+					"name": "/attachments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:{{port_c}}/attachments?id=YOUR_ATTACHMENT_ID",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_c}}",
+							"path": [
+								"attachments"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "YOUR_ATTACHMENT_ID"
+								}
+							]
+						},
+						"description": "Determines whether an attachment exists in the vault."
+					},
+					"response": []
+				},
+				{
+					"name": "/attachments",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"type": "file",
+									"src": ""
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:{{port_c}}/attachments",
+							"host": [
+								"localhost"
+							],
+							"port": "{{port_c}}",
+							"path": [
+								"attachments"
+							]
+						},
+						"description": "Uploads an attachment to the node."
 					},
 					"response": []
 				}
