@@ -115,55 +115,111 @@ The web server provides some basic functionality  to help manage your node. The 
 
 # Configuring Your CorDapp
 
-Since this template does not contain any CorDapp modules, there is no reason to declare CorDapp configurations. The following code snippets should be added to your CorDapp module `build.gradle` files  and modified accordingly:
+**Note that this template does not contain any contract or workflow CorDapp modules, therefore you need to add them yourself.**
 
-#### Contract Modules
+### Adding a CorDapp Module
+
+1. Right click on the project root and select **New**, and then **Module...** from the context menu.
+2. On the left of the **New Module** dialog, select **Gradle**. On the right of the dialog, un-check **Java**, and check **Kotlin/JVM** and then click **Next**
+3. Enter the name of the new module; for example, **my-first-cordapp-contract** and then click **Finish**.
+4. Overwrite the new `build.gradle` inside the module with this:
 
 ```groovy
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+    maven { url 'https://jitpack.io' }
+    maven { url 'https://software.r3.com/artifactory/corda-releases' }
+    maven { url 'https://repo.gradle.org/gradle/libs-releases' }
+}
+
+apply plugin: 'kotlin'
+apply plugin: 'net.corda.plugins.cordapp'
+
 cordapp {
     signing {
-        enabled = true // or false if you want hash constraints.
+        enabled = cordapp_signing_enabled
     }
     targetPlatformVersion cordapp_platform_version
     minimumPlatformVersion cordapp_platform_version
+    // TODO : Replace "contract" with "workflow" if this is a workflow module.
     contract {
+        // TODO : Replace this with the name of your CorDapp name.
         name "My First CorDapp Contract"
+        // TODO : Replace this with your company/organisation name.
         vendor "My Company"
         licence "Apache License, Version 2.0"
         versionId 1
     }
 }
-```
 
-#### Workflow Modules
+dependencies {
+    // Kotlin Dependencies
+    implementation "$kotlin_group:kotlin-stdlib-jdk8:$kotlin_version"
 
-```groovy
-cordapp {
-    signing {
-        enabled = true
-    }
-    targetPlatformVersion cordapp_platform_version
-    minimumPlatformVersion cordapp_platform_version
-    workflow {
-        name "My First CorDapp Workflow"
-        vendor "My Company"
-        licence "Apache License, Version 2.0"
-        versionId 1
+    // Corda Development Dependencies
+    cordaCompile "$corda_group:corda-core:$corda_release_version"
+
+    // CorDapp Dependencies
+    // TODO : Add cordapp packages to your dependency configuration; for example...
+    // cordapp project(":my-first-cordapp-contract")
+
+    // Test Dependencies
+    testRuntimeOnly "$junit_group:junit-jupiter-engine:$junit_version"
+    testImplementation "$junit_group:junit-jupiter-api:$junit_version"
+    testImplementation "$kotlin_group:kotlin-test:$kotlin_version"
+    testImplementation "$corda_group:corda-node-driver:$corda_release_version"
+    testImplementation project(":cordacademy-test")
+}
+
+jar { exclude '**/log4j2*.xml' }
+
+test {
+    jvmArgs = ["-ea", "-javaagent:../lib/quasar.jar"]
+    useJUnitPlatform()
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
+    kotlinOptions {
+        freeCompilerArgs = ["-Xnormalize-constructor-calls=enable"]
+        languageVersion = "1.2"
+        apiVersion = "1.2"
+        jvmTarget = "1.8"
+        javaParameters = true
     }
 }
 ```
 
-You will also need to define `cordapp_platform_version` in your `buildscript` configuration:
+5. Add base directories: `src\main\kotlin` and `src\test\kotlin`.
+
+6. Update the `settings.gradle` file at the project root to include the new module; for example:
+
+   ```
+   include 'my-first-cordapp-contract'
+   ```
+
+7. You may see a popup asking you to import your gradle changes, however you can manually refresh your gradle configuration from the gradle toolbar.
+
+8. Ensure that you can build the project; for example `./gradlew clean build`
+
+_Keep an eye out for **TODO** comments in `build.gradle` files. They serve as indicators to things you will need to modify!_
+
+### CorDapp Configuration Variables
+
+The project root's `build.gradle` file contains variables which allow you to control CorDapp configuration globally; for example:
 
 ```groovy
 buildscript {
     ext {
-        cordapp_platform_version = 4
+        
+        ...
+        
+        cordapp_platform_version = 5
+        cordapp_signing_enabled = true
     }
 }
 ```
-
-_Keep an eye out for **TODO** comments in `build.gradle` files. They serve as indicators to things you will need to modify!_
 
 
 
@@ -288,6 +344,8 @@ Everything else will be handled for you!
 
 Finally, in addition to all of the extensible test classes, there are three test identities for `PARTY_A`, `PARTY_B` and `PARTY_C`, which use the same Corda X.500 names as the `deployNodes` gradle task, and the in-memory network. There is also an implementation of `DummyState` and `DummyContract` which are useful when writing contract tests.
 
+
+
 # Getting Template Updates
 
 This repository will get updated periodically with new dependency versions and features. In order to pull these changes into derived repositories you will need to:
@@ -362,4 +420,4 @@ Sometimes you will see a red cross over the top of an intelliJ run configuration
 
 # Contribution
 
-Cordacademy is an open source initiative, so we hope that you will contribute even more awesomeness :)
+Cordacademy is an open-source initiative and we'd like to encourage contribution to the Corda ecosystem through Cordacademy.

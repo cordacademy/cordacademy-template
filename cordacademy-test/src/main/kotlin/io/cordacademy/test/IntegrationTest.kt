@@ -4,6 +4,7 @@ import net.corda.core.utilities.getOrThrow
 import net.corda.core.utilities.loggerFor
 import net.corda.testing.driver.DriverParameters
 import net.corda.testing.driver.NodeHandle
+import net.corda.testing.driver.PortAllocation
 import net.corda.testing.driver.driver
 import net.corda.testing.node.TestCordapp
 import net.corda.testing.node.User
@@ -48,7 +49,11 @@ abstract class IntegrationTest(private vararg val cordapps: String) {
             isDebug = true,
             startNodesInProcess = true,
             waitForAllNodesToFinish = true,
-            cordappsForAllNodes = cordapps.map { TestCordapp.findCordapp(it) }
+            cordappsForAllNodes = cordapps.map { TestCordapp.findCordapp(it) },
+            portAllocation = object : PortAllocation() {
+                private var start = 10000
+                override fun nextPort(): Int = start++
+            }
         )
 
         driver(parameters) {
