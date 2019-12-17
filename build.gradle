@@ -4,10 +4,10 @@ buildscript {
         kotlin_version = "1.2.71"
 
         corda_group = "net.corda"
-        corda_release_version = "4.0"
+        corda_release_version = "4.3"
 
         corda_gradle_plugin_group = "net.corda.plugins"
-        corda_gradle_plugin_version = "4.0.45"
+        corda_gradle_plugin_version = "5.0.4"
 
         junit_group = "org.junit.jupiter"
         junit_version = "5.3.1"
@@ -25,14 +25,16 @@ buildscript {
         ktor_version = "1.2.2"
         ktor_kotlin_version = "1.3.40"
 
-        cordapp_platform_version = 4
+        // TODO : Configure your CorDapp platform version and constraint mechanism.
+        cordapp_platform_version = 5
+        cordapp_signing_enabled = true
     }
 
     repositories {
         mavenLocal()
         mavenCentral()
         jcenter()
-        maven { url 'https://ci-artifactory.corda.r3cev.com/artifactory/corda-releases' }
+        maven { url 'https://software.r3.com/artifactory/corda-releases' }
     }
 
     dependencies {
@@ -48,7 +50,7 @@ repositories {
     mavenCentral()
     jcenter()
     maven { url 'https://jitpack.io' }
-    maven { url 'https://ci-artifactory.corda.r3cev.com/artifactory/corda' }
+    maven { url 'https://software.r3.com/artifactory/corda-releases' }
     maven { url 'https://repo.gradle.org/gradle/libs-releases' }
 }
 
