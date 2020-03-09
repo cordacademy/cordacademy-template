@@ -1,0 +1,26 @@
+cordapp {
+    targetPlatformVersion cordapp_platform_version
+    minimumPlatformVersion cordapp_platform_version
+    workflow {
+        name cordapp_workflow
+        vendor cordapp_vendor
+        licence cordapp_license
+        versionId cordapp_version
+    }
+    signing {
+        enabled = cordapp_signing_enabled
+    }
+}
+
+dependencies {
+    // Main Dependencies
+    implementation "$kotlin_group:kotlin-stdlib-jdk8:$kotlin_version"
+    cordaCompile "$corda_group:corda-core:$corda_release_version"
+    cordapp project(":contract")
+
+    // Test Dependencies
+    testRuntimeOnly "$junit_group:junit-jupiter-engine:$junit_version"
+    testImplementation "$junit_group:junit-jupiter-api:$junit_version"
+    testImplementation "$kotlin_group:kotlin-test:$kotlin_version"
+    testImplementation "$corda_group:corda-node-driver:$corda_release_version"
+}

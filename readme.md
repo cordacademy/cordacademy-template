@@ -47,10 +47,10 @@ cd cordacademy-template
 ./gradlew deployNodes
 ```
 
-You can find nodes in the `build/nodes` directory. They will be called `Notary`, `PartyA`, `PartyB` and `PartyC`. Given that this is only a template, the nodes won't do very much because there are no installed CorDapps, but you should be able to ensure that they start at least.
+You can find nodes in the `tasks/build/nodes` directory. They will be called `Notary`, `PartyA`, `PartyB` and `PartyC`. Given that this is only a template, the nodes won't do very much because there are no installed CorDapps, but you should be able to ensure that they start at least.
 
 ```
-cd build/nodes/<NODE_NAME>
+cd tasks/build/nodes/<NODE_NAME>
 java -jar corda.jar
 ```
 
@@ -115,95 +115,7 @@ The web server provides some basic functionality  to help manage your node. The 
 
 # Configuring Your CorDapp
 
-**Note that this template does not contain any contract or workflow CorDapp modules, therefore you need to add them yourself.**
-
-### Adding a CorDapp Module
-
-1. Right click on the project root and select **New**, and then **Module...** from the context menu.
-2. On the left of the **New Module** dialog, select **Gradle**. On the right of the dialog, un-check **Java**, and check **Kotlin/JVM** and then click **Next**
-3. Enter the name of the new module; for example, **my-first-cordapp-contract** and then click **Finish**.
-4. Overwrite the new `build.gradle` inside the module with this:
-
-```groovy
-repositories {
-    mavenLocal()
-    mavenCentral()
-    jcenter()
-    maven { url 'https://jitpack.io' }
-    maven { url 'https://software.r3.com/artifactory/corda-releases' }
-    maven { url 'https://repo.gradle.org/gradle/libs-releases' }
-}
-
-apply plugin: 'kotlin'
-apply plugin: 'net.corda.plugins.cordapp'
-
-cordapp {
-    signing {
-        enabled = cordapp_signing_enabled
-    }
-    targetPlatformVersion cordapp_platform_version
-    minimumPlatformVersion cordapp_platform_version
-    // TODO : Replace "contract" with "workflow" if this is a workflow module.
-    contract {
-        // TODO : Replace this with the name of your CorDapp name.
-        name "My First CorDapp Contract"
-        // TODO : Replace this with your company/organisation name.
-        vendor "My Company"
-        licence "Apache License, Version 2.0"
-        versionId 1
-    }
-}
-
-dependencies {
-    // Kotlin Dependencies
-    implementation "$kotlin_group:kotlin-stdlib-jdk8:$kotlin_version"
-
-    // Corda Development Dependencies
-    cordaCompile "$corda_group:corda-core:$corda_release_version"
-
-    // CorDapp Dependencies
-    // TODO : Add cordapp packages to your dependency configuration; for example...
-    // cordapp project(":my-first-cordapp-contract")
-
-    // Test Dependencies
-    testRuntimeOnly "$junit_group:junit-jupiter-engine:$junit_version"
-    testImplementation "$junit_group:junit-jupiter-api:$junit_version"
-    testImplementation "$kotlin_group:kotlin-test:$kotlin_version"
-    testImplementation "$corda_group:corda-node-driver:$corda_release_version"
-    testImplementation project(":cordacademy-test")
-}
-
-jar { exclude '**/log4j2*.xml' }
-
-test {
-    jvmArgs = ["-ea", "-javaagent:../lib/quasar.jar"]
-    useJUnitPlatform()
-}
-
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
-    kotlinOptions {
-        freeCompilerArgs = ["-Xnormalize-constructor-calls=enable"]
-        languageVersion = "1.2"
-        apiVersion = "1.2"
-        jvmTarget = "1.8"
-        javaParameters = true
-    }
-}
-```
-
-5. Add base directories: `src\main\kotlin` and `src\test\kotlin`.
-
-6. Update the `settings.gradle` file at the project root to include the new module; for example:
-
-   ```
-   include 'my-first-cordapp-contract'
-   ```
-
-7. You may see a popup asking you to import your gradle changes, however you can manually refresh your gradle configuration from the gradle toolbar.
-
-8. Ensure that you can build the project; for example `./gradlew clean build`
-
-_Keep an eye out for **TODO** comments in `build.gradle` files. They serve as indicators to things you will need to modify!_
+The template contains empty modules for building your contract and workflow.
 
 ### CorDapp Configuration Variables
 
@@ -217,6 +129,11 @@ buildscript {
         
         cordapp_platform_version = 5
         cordapp_signing_enabled = true
+        cordapp_contract = 'TODO_REPLACE_WITH_CONTRACT_NAME'
+        cordapp_workflow = 'TODO_REPLACE_WITH_WORKFLOW_NAME'
+        cordapp_vendor = 'TODO_REPLACE_WITH_VENDOR_NAME'
+        cordapp_license = 'TODO_REPLACE_WITH_LICENSE'
+        cordapp_version = 1
     }
 }
 ```
@@ -225,26 +142,18 @@ buildscript {
 
 # Testing Your CorDapp
 
-This template provides some extensible utility classes to help you write consistent unit and integration tests. In order to gain access to the built-in test classes, ensure you have a gradle dependency in your test module on the `cordacademy-test` project.
+This template provides some extensible utility classes to help you write consistent unit and integration tests. The `ContractTest`, `FlowTest` and `IntegrationTest` abstract classes are designed to wrap all of the basic requirements for writing consistent contract, workflow and integration tests.
 
-```groovy
-dependencies {
-    testImplementation project(":cordacademy-test")
-}
-```
+Keep an eye out for **TODO** comments in the test classes as you will need to add cordapp and contracts for each test class.
 
-### [Test Classes](https://github.com/cordacademy/cordacademy-template/tree/master/cordacademy-test/src/main/kotlin/io/cordacademy/test)
-
-The `ContractTest`, `FlowTest` and `IntegrationTest` abstract classes are designed to wrap all of the basic requirements for writing consistent contract, workflow and integration tests.
-
-### [ContractTest](https://github.com/cordacademy/cordacademy-template/blob/master/cordacademy-test/src/main/kotlin/io/cordacademy/test/ContractTest.kt)
+### ContractTest
 
 The `ContractTest` class provides utility for implementing Corda mock service based tests. The following example illustrates how to consume this class:
 
 ```kotlin
 package my.contract.tests
 
-class MyContractTests : ContractTest("my.cordapp.package") {
+class MyContractTests : ContractTest() {
 
     @Test
     fun `My contract should do something awesome`() {
@@ -260,7 +169,7 @@ class MyContractTests : ContractTest("my.cordapp.package") {
 }
 ```
 
-### [FlowTest](https://github.com/cordacademy/cordacademy-template/blob/master/cordacademy-test/src/main/kotlin/io/cordacademy/test/FlowTest.kt)
+### FlowTest
 
 The `FlowTest` class provides utility for implementing Corda mock network based tests. By extending this class you get access to:
 
@@ -277,7 +186,7 @@ The following example illustrates how to consume this class:
 ```kotlin
 package my.workflow.tests
 
-class MyWorkflowTests : FlowTest("my.cordapp.package") {
+class MyWorkflowTests : FlowTest() {
 
     @Test
     fun `My flow should do something awesome`() {
@@ -287,7 +196,7 @@ class MyWorkflowTests : FlowTest("my.cordapp.package") {
         val timeout = Duration.ofSeconds(10)
         
         // Act
-        val result = run {
+        val result = runNetwork {
             nodeA.startFlow(flow)
         }.getOrThrow(timeout)
         
@@ -297,7 +206,7 @@ class MyWorkflowTests : FlowTest("my.cordapp.package") {
 }
 ```
 
-### [IntegrationTest](https://github.com/cordacademy/cordacademy-template/blob/master/cordacademy-test/src/main/kotlin/io/cordacademy/test/IntegrationTest.kt)
+### IntegrationTest
 
 The `IntegrationTest` class provides utility for implementing Corda node driver based tests.
 
@@ -306,7 +215,7 @@ The following example illustrates how to consume this class:
 ```kotlin
 package my.integration.tests
 
-class MyIntegrationTests : IntegrationTest("my.cordapp.package") {
+class MyIntegrationTests : IntegrationTest() {
 
     @Test
     fun `My node should do something awesome`() = start {
@@ -325,24 +234,9 @@ class MyIntegrationTests : IntegrationTest("my.cordapp.package") {
 
 **Note that due to the expensive nature of spinning up a driver based network, integration tests will be slow, as the network will be spun up and spun down for every test. We're working on improving this in future versions of the template.**
 
-### [NodeDriver](https://github.com/cordacademy/cordacademy-template/blob/master/src/test/kotlin/NodeDriver.kt)
+### MockNetwork
 
-The `NodeDriver` class simply extends the `IntegrationTest` class, but also has a run configuration associated with it in IntelliJ, allowing you to execute a driver based in-memory Corda network for manual testing. All you need to do in the `NodeDriver.kt` file is specify which CorDapps you want the network to load.
-
-```kotlin
-class NodeDriver : IntegrationTest(
-    "my.first.cordapp.contract",
-    "my.first.cordapp.workflow"
-) { ... }
-```
-
-Everything else will be handled for you!
-
-**Note that `NodeDriver` is located in the parent module, rather than in the `cordacademy-test` module. This is because it requires dependencies on your CorDapp modules, however your CorDapp modules require a dependency on `cordacademy-test` which would create a circular dependency, and your code would not compile. Since the parent module also requires dependencies on your CorDapp modules in order to execute `deployNodes` correctly, this is a logical place to also maintain your in-memory node driver network.**
-
-### [Test Data](https://github.com/cordacademy/cordacademy-template/blob/master/cordacademy-test/src/main/kotlin/io/cordacademy/test/TestData.kt)
-
-Finally, in addition to all of the extensible test classes, there are three test identities for `PARTY_A`, `PARTY_B` and `PARTY_C`, which use the same Corda X.500 names as the `deployNodes` gradle task, and the in-memory network. There is also an implementation of `DummyState` and `DummyContract` which are useful when writing contract tests.
+The `MockNetwork` class simply extends the `IntegrationTest` class, but also has a run configuration associated with it in IntelliJ, allowing you to execute a driver based in-memory Corda network for manual testing.
 
 
 
