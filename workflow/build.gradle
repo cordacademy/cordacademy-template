@@ -16,6 +16,9 @@ dependencies {
     // Main Dependencies
     implementation "$kotlin_group:kotlin-stdlib-jdk8:$kotlin_version"
     cordaCompile "$corda_group:corda-core:$corda_release_version"
+    cordaCompile "$corda_tokens_sdk_release_group:tokens-contracts:$corda_tokens_sdk_version"
+    cordaCompile "$corda_tokens_sdk_release_group:tokens-workflows:$corda_tokens_sdk_version"
+
     cordapp project(":contract")
 
     // Test Dependencies

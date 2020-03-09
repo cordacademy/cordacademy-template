@@ -4,6 +4,8 @@ dependencies {
     implementation "$corda_group:corda-core:$corda_release_version"
     implementation "$corda_group:corda-rpc:$corda_release_version"
     implementation "$springboot_group:spring-boot-starter-web:$springboot_release_version"
+    implementation "$corda_tokens_sdk_release_group:tokens-contracts:$corda_tokens_sdk_version"
+    implementation "$corda_tokens_sdk_release_group:tokens-workflows:$corda_tokens_sdk_version"
 
     implementation project(":contract")
     implementation project(":workflow")
