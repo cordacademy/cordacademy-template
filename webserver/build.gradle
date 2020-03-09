@@ -1,0 +1,16 @@
+dependencies {
+    // Main Dependencies
+    implementation "$kotlin_group:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "$corda_group:corda-core:$corda_release_version"
+    implementation "$corda_group:corda-rpc:$corda_release_version"
+    implementation "$springboot_group:spring-boot-starter-web:$springboot_release_version"
+
+    implementation project(":contract")
+    implementation project(":workflow")
+
+    // Test Dependencies
+    testRuntimeOnly "$junit_group:junit-jupiter-engine:$junit_version"
+    testImplementation "$junit_group:junit-jupiter-api:$junit_version"
+    testImplementation "$kotlin_group:kotlin-test:$kotlin_version"
+    testImplementation "$corda_group:corda-node-driver:$corda_release_version"
+}
