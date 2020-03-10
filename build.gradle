@@ -39,6 +39,7 @@ buildscript {
         classpath "$corda_gradle_plugin_group:quasar-utils:$corda_gradle_plugin_version"
     }
 }
+
 subprojects {
     repositories {
         mavenLocal()

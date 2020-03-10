@@ -14,7 +14,7 @@ abstract class IntegrationTest : AutoCloseable {
     private companion object {
 
         val cordapps = listOf<String>(
-            // TODO : Add cordapps...
+           TODO("Add cordapps...")
         )
 
         val IDENTITY_A = TestIdentity(CordaX500Name("PartyA", "London", "GB"))
